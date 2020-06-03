@@ -17,14 +17,16 @@ FileSystem.readdir("./Events/", (err, files) => {
 
 Client.commands = new Enmap();
 
-FileSystem.readdir("./Commands/", (err, files) => {
-    if (err) return console.error(err);
-    files.forEach(file => {
-        if (!file.endsWith(".js")) return;
-        let props = require(`./Commands/${file}`);
-        let commandName = file.split(".")[0];
-        console.log(`[LOADING] Loaded { ${commandName} }`);
-        Client.commands.set(commandName, props);
+Client.config.Modules.forEach(module => {
+    FileSystem.readdir(`./Commands/${module}/`, (err, files) => {
+        if (err) return console.error(err);
+        files.forEach(file => {
+            if (!file.endsWith(".js")) return;
+            let props = require(`./Commands/${module}/${file}`);
+            let commandName = file.split(".")[0];
+            console.log(`[LOADING] Loaded { ${commandName} }`);
+            Client.commands.set(commandName, props);
+        });
     });
 });
 
