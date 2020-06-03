@@ -1,3 +1,3 @@
 exports.run = (client, message, args) => {
-    console.log("Warned");
+    console.log("Muted");
 }
