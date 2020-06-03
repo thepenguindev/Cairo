@@ -1,0 +1,16 @@
+{
+  "name": "cairo",
+  "version": "0.0.1",
+  "description": "A Discord Bot for BrokenOrdinance's SCPF",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TheEpicPenguin13",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "enmap": "^5.2.4",
+    "fs": "0.0.1-security"
+  }
+}
