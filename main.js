@@ -6,6 +6,29 @@ const Client = new Discord.Client();
 const Config = require("./config.json");
 Client.config = Config;
 
+class Logger {
+    constructor() {
+        this.types = [
+            "LOGGING",
+            "STARTUP",
+            "MESSAGE",
+            "LOADING",
+            "COMMAND"
+        ];
+
+        this.log = function (message, type) {
+            this.types.forEach(t => {
+                if (t == type) {
+                    console.log(`[${type}] ${message}`);
+                    return;
+                }
+            });
+        };
+    }
+}
+
+Client.logger = new Logger();
+
 FileSystem.readdir("./Events/", (err, files) => {
     if (err) return console.error(err);
     files.forEach(file => {
@@ -24,10 +47,10 @@ Client.config.Modules.forEach(module => {
             if (!file.endsWith(".js")) return;
             let props = require(`./Commands/${module}/${file}`);
             let commandName = file.split(".")[0];
-            console.log(`[LOADING] Loaded { ${commandName} }`);
             Client.commands.set(commandName, props);
         });
     });
+    Client.logger.log(`Loaded Module ${module}`, "LOADING");
 });
 
 Client.login(Client.config.Token);
